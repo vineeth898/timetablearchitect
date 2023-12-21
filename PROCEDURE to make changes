@@ -1,0 +1,1 @@
+To make changes of teachers datafields, first change the teacher object then change the ENUMERATOR, remove/add statements in the switch , keep schedules at the end, 
