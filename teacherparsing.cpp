@@ -2,6 +2,7 @@
 #include<string>
 #include<fstream>
 #include"generalinfo.cpp"
+#include <algorithm>
 using namespace std;
 fstream teacherdata;
 int noofteachers=0;
@@ -37,14 +38,32 @@ teacher::teacher(string name,string designation,string department,string special
         }
     }
 }
-void parseTeachers(string fileDestination){
+teacher* parseTeachers(string fileDestination){
     teacherdata.open(fileDestination);
     string prev,curr;
-    teacher teacherlist[4];
+    teacher *teacherList= new teacher[1];
     while(true){
         teacherdata>>curr;
         if(curr==prev){
             break;
+         }
+        if(noofteachers>0){
+            teacher *temp=new teacher[noofteachers+1];
+            for(int k=0;k<noofteachers;k++){
+                temp[k].name=teacherList[k].name;
+                temp[k].designation=teacherList[k].designation;
+                temp[k].department=teacherList[k].department;
+                temp[k].specialisation=teacherList[k].specialisation;
+                temp[k].hourstoteach=teacherList[k].hourstoteach;
+                for(int i=0;i<generalinfo::numberOfDays;i++){
+                    for(int j=0;j<generalinfo::numberOfPeriods;j++){
+                        temp[k].schedule[i][j][0]=teacherList[k].schedule[i][j][0];
+                        temp[k].schedule[i][j][1]=teacherList[k].schedule[i][j][1];
+                    }
+                }
+            }
+            delete []teacherList;
+            teacherList=temp;
         }
         prev=curr;
         int commacount=0;
@@ -57,23 +76,23 @@ void parseTeachers(string fileDestination){
             switch (commacount)
             {
             case name:
-                    teacherlist[noofteachers].name.push_back(curr[i]);
+                    teacherList[noofteachers].name.push_back(curr[i]);
                 break;
             
             case desegnation:
-                    teacherlist[noofteachers].designation.push_back(curr[i]);
+                    teacherList[noofteachers].designation.push_back(curr[i]);
                 break;
             
             case branch:
-                    teacherlist[noofteachers].department.push_back(curr[i]);
+                    teacherList[noofteachers].department.push_back(curr[i]);
                 break;
             
             case specialisation:
-                    teacherlist[noofteachers].specialisation.push_back(curr[i]);
+                    teacherList[noofteachers].specialisation.push_back(curr[i]);
                 break;
             
             case hourstoteach:
-                    teacherlist[noofteachers].hourstoteach=teacherlist[noofteachers].hourstoteach*10+int(curr[i]-'0');
+                    teacherList[noofteachers].hourstoteach=teacherList[noofteachers].hourstoteach*10+int(curr[i]-'0');
                 break;
             case schedule:  
                 {
@@ -93,7 +112,7 @@ void parseTeachers(string fileDestination){
                             count[level]++;
                         }
                         else{
-                            teacherlist[noofteachers].schedule[count[0]][count[1]][count[2]]=teacherlist[noofteachers].schedule[count[0]][count[1]][count[2]]*10+curr[iterator]-'0';
+                            teacherList[noofteachers].schedule[count[0]][count[1]][count[2]]=teacherList[noofteachers].schedule[count[0]][count[1]][count[2]]*10+curr[iterator]-'0';
                         }
                         iterator++;
                     }while(level>=0);
@@ -101,20 +120,23 @@ void parseTeachers(string fileDestination){
                 }
                 break;
             default:
+                cout<<"smothin aint right on teacher "<<noofteachers+1;
                 break;
             }
         }
         s:
-        cout<<" teacher name: "<<teacherlist[noofteachers].name;
-        cout<<"\n teacher desegantion: "<<teacherlist[noofteachers].designation;
-        cout<<"\n teacher department: "<<teacherlist[noofteachers].department;
-        cout<<"\n teacher specialisation: "<<teacherlist[noofteachers].specialisation;
-        cout<<"\n teacher noofhours: "<<teacherlist[noofteachers].hourstoteach<<endl<<endl;
+        // cout<<" teacher name: "<<teacherList[noofteachers].name;
+        // cout<<"\n teacher desegantion: "<<teacherList[noofteachers].designation;
+        // cout<<"\n teacher department: "<<teacherList[noofteachers].department;
+        // cout<<"\n teacher specialisation: "<<teacherList[noofteachers].specialisation;
+        // cout<<"\n teacher noofhours: "<<teacherList[noofteachers].hourstoteach<<endl<<endl;
         noofteachers++;
     }
     teacherdata.close();
-    cout<<noofteachers;
+    return teacherList;
 }
 int main(){
-    parseTeachers("teacherdata.csv");
+    teacher *teacherList=new teacher[noofteachers];
+    teacherList=parseTeachers("teacherdata.csv");
+    cout<<teacherList[3].name;
 }   
