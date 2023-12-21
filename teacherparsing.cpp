@@ -37,8 +37,8 @@ teacher::teacher(string name,string designation,string department,string special
         }
     }
 }
-int main(){
-    teacherdata.open("teacherdata.csv");
+void parseTeachers(string fileDestination){
+    teacherdata.open(fileDestination);
     string prev,curr;
     teacher teacherlist[2];
     while(true){
@@ -82,23 +82,18 @@ int main(){
                     int count[3];
                     count[0]=0;count[1]=0;count[2]=0;
                     do{
-                       cout<<"\n\nnow comparing"<<curr[iterator];
                         if(curr[iterator]=='['){
                             level++;
-                            cout<<"\ngoing one level deeper: "<<level;
                         }
                         else if(curr[iterator]==']'){
                             count[level]=0;
                             level--;
-                            cout<<"\ngoing one level upper: "<<level;
                         }
                         else if(curr[iterator]==','){
                             count[level]++;
-                            cout<<"\nchanging "<<level<<" element";
                         }
                         else{
                             teacherlist[noofteachers].schedule[count[0]][count[1]][count[2]]=teacherlist[noofteachers].schedule[count[0]][count[1]][count[2]]*10+curr[iterator]-'0';
-                            cout<<"\nchanging schedule["<<count[0]<<"]["<<count[1]<<"]["<<count[2]<<"] to"<<teacherlist[noofteachers].schedule[count[0]][count[1]][count[2]];
                         }
                         iterator++;
                     }while(level>=0);
@@ -110,13 +105,16 @@ int main(){
             }
         }
         s:
-        cout<<"\n teacher name: "<<teacherlist[noofteachers].name;
+        cout<<" teacher name: "<<teacherlist[noofteachers].name;
         cout<<"\n teacher desegantion: "<<teacherlist[noofteachers].designation;
         cout<<"\n teacher department: "<<teacherlist[noofteachers].department;
         cout<<"\n teacher specialisation: "<<teacherlist[noofteachers].specialisation;
-        cout<<"\n teacher noofhours: "<<teacherlist[noofteachers].hourstoteach;
-        cout<<"\nend of one teacher loop\n";
+        cout<<"\n teacher noofhours: "<<teacherlist[noofteachers].hourstoteach<<endl<<endl;
         noofteachers++;
     }
+    teacherdata.close();
     cout<<noofteachers;
+}
+int main(){
+    parseTeachers("teacherdata.csv");
 }   
