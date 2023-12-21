@@ -40,7 +40,7 @@ teacher::teacher(string name,string designation,string department,string special
 void parseTeachers(string fileDestination){
     teacherdata.open(fileDestination);
     string prev,curr;
-    teacher teacherlist[2];
+    teacher teacherlist[4];
     while(true){
         teacherdata>>curr;
         if(curr==prev){
