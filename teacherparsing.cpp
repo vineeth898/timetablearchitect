@@ -41,10 +41,14 @@ void parseTeachers(string fileDestination){
     teacherdata.open(fileDestination);
     string prev,curr;
     teacher teacherlist[2];
+    teacher *teacherList= new teacher[1];
     while(true){
         teacherdata>>curr;
         if(curr==prev){
             break;
+         }
+        if(noofteachers>0){
+            teacher *temp=new teacher[noofteachers+1];
         }
         prev=curr;
         int commacount=0;
