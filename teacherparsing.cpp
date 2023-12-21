@@ -138,5 +138,4 @@ teacher* parseTeachers(string fileDestination){
 int main(){
     teacher *teacherList=new teacher[noofteachers];
     teacherList=parseTeachers("teacherdata.csv");
-    cout<<teacherList[3].name;
 }   
