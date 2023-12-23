@@ -46,6 +46,7 @@ teacher* parseTeachers(string fileDestination){
     teacherdata.open(fileDestination);//opening the file
     string entry;//entry(each entry seperated by a whitepsace)
     teacher *teacherList= new teacher[1];//Initialising a teacherlist with 1 teacher
+    try{
     while(!teacherdata.eof()){//see if file reading pointer pointing to end of file
         teacherdata>>entry;//read entry
         
@@ -134,6 +135,10 @@ teacher* parseTeachers(string fileDestination){
         noofteachers++;//go to next teacher.
     }
     teacherdata.close();//close file
+    }
+    catch(...){
+        cout<<"something has gone wrong. check data entry format";
+    }
     return teacherList;//return pointer to list of teacher objects
 }
 int main(){
