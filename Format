@@ -1,0 +1,5 @@
+Teacherdata.csv: Name,desegnation,dep,noofhours,[[[(0 or 1 1 means free),(if zero then which class teaching)],[],[]...]...]<WHITESPACE>
+batchdata.csv: Department,year<WHitespace>sub1,sub2,...(all classroom non elective courses)<whitespace>[Electivesubjectname1,[sub1,[teacher1,teacher2,teacher3...(no of teachers=no of sections)]],....],...<WHITESPACE>[sub1,[teacher1,teacher2,teacher3....],[labroom1,labroom2,...]],....<WHITESPACE>
+sectiondata.csv: teacher1,teacher2,teacher3,teacher4,...(nonelectiveclasroom teachers in order of sub1,sub2 ,sub3..)
+subjectdata.csv: sub1,noofcredits,hours per credit<WHITESPACE>(enter induvidual elective credits like Electronics 3 credits)
+classroominfo.cpp: classroomname,capacityofclass,[schedule matrix] <WHITESPACE>
